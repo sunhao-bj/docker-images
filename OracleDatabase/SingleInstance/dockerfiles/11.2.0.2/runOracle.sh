@@ -168,6 +168,10 @@ trap _term SIGTERM
 # Set SIGKILL handler
 trap _kill SIGKILL
 
+#Add by sunhao
+chown -R oracle:dba $ORACLE_BASE/oradata
+chmod 6751 $ORACLE_HOME/bin/oracle
+
 # Check whether database already exists
 if [ -d $ORACLE_BASE/oradata/$ORACLE_SID ]; then
    symLinkFiles;
@@ -192,6 +196,9 @@ if [ "$?" == "0" ]; then
    
    # Execute custom provided setup scripts
    runUserScripts $ORACLE_BASE/scripts/setup
+else
+   #Add by sunhao
+   /etc/init.d/oracle-xe restart
 fi;
 
 # Check whether database is up and running
